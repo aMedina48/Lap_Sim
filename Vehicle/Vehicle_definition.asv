@@ -1,0 +1,102 @@
+%% Vehicle Definition
+
+
+%Vehicle Definition for Lapsim
+
+Vehicle.m                     = str2double(handles.Mass);         %Mass in kg
+Vehicle.friction_coefficient  = str2double(handles.Friction);       %Friction Coefficient
+
+Vehicle.CL                    = str2double(handles.CL);         %Coefficient of lift
+Vehicle.CD                    = str2double(handles.CD);         %Coefficient of drag
+Vehicle.A                     = str2double(handles.Mass);            %Frontal area
+Vehicle.rho                   = 1.2;         %Air density
+
+
+Vehicle.power                 = str2double(handles.Power);        %Engine Power in Watts
+
+Vehicle.v_max =((2*Vehicle.power)/(Vehicle.rho*Vehicle.CD))^(1/3);   %Maximum speed of vehicle
+
+
+
+
+% %% Vehicle Definition for Analysis
+% 
+% %% General chassis parameters
+% 
+% Vehicle.wheelbase             =1.65;              %(m)
+% Vehicle.F_track               =1.25;              %(m)
+% Vehicle.R_track               =1.25;              %(m)
+% Vehicle.weight_distribution   =0.47;                %Weight distribution (%front)
+% 
+% %% Vehicle roll centers
+% 
+% Vehicle.ZRF                  = 0.1;           %Front roll center height (m)
+% Vehicle.ZRR                  = 0.15;          %Rear roll center height (m)        
+% 
+% %% Vehicle Roll Stiffness
+% 
+% Vehicle.Kf                    = 500;           %Front roll stiffness (units)
+% Vehicle.Kr                    = 500;           %Rear roll stiffness (units)
+% 
+% %% Vehicle Corner and axle weights
+% 
+% Vehicle.m_FR                  =Vehicle.m*Vehicle.weight_distribution/2;                   %Weight front right (kg)
+% Vehicle.m_FL                  =Vehicle.m*Vehicle.weight_distribution/2;                  %Weight front left (kg)
+% Vehicle.m_RR                  =Vehicle.m*(1-Vehicle.weight_distribution)/2;               %Weight rear right (kg)
+% Vehicle.m_RL                  =Vehicle.m*(1-Vehicle.weight_distribution)/2;                   %Weight rear left (kg)
+% 
+% Vehicle.front_axle_weight     =Vehicle.weight_distribution*Vehicle.m;
+% Vehicle.rear_axle_weight      =(1-Vehicle.weight_distribution)*Vehicle.m;
+% 
+% %% Vehicle Center of mass parameters
+% 
+% Vehicle.CG_height             =0.2;               %Distance taken from ground (m)
+% Vehicle.CG_a                  =(1-Vehicle.weight_distribution)*Vehicle.wheelbase; %Distance from front axle (m)
+% Vehicle.CG_b                  =Vehicle.wheelbase-Vehicle.CG_a; %Distance from rear axle
+% Vehicle.CG_y                  =(((Vehicle.m_FR + Vehicle.m_RR)/Vehicle.m)*Vehicle.R_track)-(Vehicle.R_track/2);
+% Vehicle.H                     =Vehicle.CG_height-Vehicle.ZRF-((Vehicle.ZRR-Vehicle.ZRF)*Vehicle.CG_a / Vehicle.wheelbase);
+% 
+% %% Vehicle Drivetrain
+% 
+% Vehicle.gr_1                 =  2.308;
+% Vehicle.gr_2                 =  1.867;
+% Vehicle.gr_3                 =  1.444;
+% Vehicle.gr_4                 =  1.150;
+% Vehicle.gr_5                 =  0.955;
+% Vehicle.internal_reduction   =  2.778;
+% Vehicle.final_drive          =  3.090;
+% Vehicle.wheel_radius         =  0.2286;
+% 
+% %% Power curve fitting
+% 
+% load('MRT16_power_torque_curve.mat')
+% Fit_function_power_curve                    %This will fit a smoother spline function to the power curve.
+% Vehicle.power_curve          =  Power_curve_function;
+% 
+% 
+% %% Avaialble power at wheels for each gear ratio at a given speed
+% 
+% Power_map;
+% 
+% %% Vehicle Power at wheel for each gear ratio
+% 
+% Vehicle.power_first_gear  = Power_1st_gear_function;
+% Vehicle.power_second_gear = Power_2nd_gear_function;
+% Vehicle.power_third_gear  = Power_3rd_gear_function; 
+% Vehicle.power_fourth_gear = Power_4th_gear_function; 
+% Vehicle.power_fifth_gear  = Power_5th_gear_function; 
+% 
+% %% Vehicle Speed for each gear ratio
+% 
+% Vehicle.speed_first_gear  = Speed_1st_gear;
+% Vehicle.speed_second_gear = Speed_2nd_gear;
+% Vehicle.speed_third_gear  = Speed_3rd_gear;
+% Vehicle.speed_fourth_gear = Speed_4th_gear;
+% Vehicle.speed_fifth_gear  = Speed_5th_gear;
+% 
+% 
+% %% Clearnig useless arrays
+% 
+% clear Power_1st_gear_function Power_2nd_gear_function Power_3rd_gear_function Power_4th_gear_function Power_5th_gear_function; 
+% clear Power_1st_gear_function Power_2nd_gear Power_3rd_gear Power_4th_gear Power_5th_gear;
+% clear Speed_1st_gear Speed_2nd_gear Speed_3rd_gear Speed_4th_gear Speed_5th_gear 
